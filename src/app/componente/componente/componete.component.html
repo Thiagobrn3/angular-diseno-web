@@ -1,0 +1,55 @@
+<table>
+    <thead>
+        <tr class="device-table-tr">
+            <th>Id</th>
+            <th>Name</th>
+            <th>Price</th>
+            <th>Color</th>
+            <th colspan="2"></th>
+        </tr>
+    </thead>
+<tbody>
+    <ng-container *ngFor="let device of deviceList">
+        <tr *ngIf="device.data &&(device.data.hasOwnProperty('price') ||device.data.hasOwnProperty('color'))">
+            <td>{{ device.id }}</td>
+            <td>{{ device.name }}</td>
+            <td>{{ device.data.price }}</td>
+            <td>{{ device.data.color }}</td>
+            <td><button (click)="view(see,device)">View</button></td>
+            <td><button (click)="delete(device.id)">Delete</button></td>
+        </tr>
+    </ng-container>
+</tbody>
+<tfoot>
+    <tr>
+        <td></td>
+        <td><input [(ngModel)]="name" type="text" placeholder="Name" /></td>
+        <td><input [(ngModel)]="price" type="text" placeholder="Price" /></td>
+        <td><input [(ngModel)]="color" type="text" placeholder="Color" /></td>
+        <td colspan="2" style="text-align: center">
+        <button (click)="save()">Add</button>
+        </td>
+    </tr>
+</tfoot>
+</table>
+<!--Modal-->
+<ng-template #see let-modal>
+    <div class="modal-header">
+        <h4 class="modal-title">View Device</h4>
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+        <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <p>Id: {{ id2 }}</p>
+        <tr>
+            <td><p>Name:</p><input type="text" text [(ngModel)]="name2" placeholder="Name" /></td>
+            <td><p>Price:</p><input type="text" text [(ngModel)]="price2" placeholder="Price" /></td>
+            <td><p>Color:</p><input type="text" text [(ngModel)]="color2" placeholder="Color" /></td>
+        </tr>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="modal.dismiss('cancel click')">Cancel</button>
+        <button type="button" class="btn btn-secondary" (click)="saveChanges(modal)">Save</button>
+    </div>
+</ng-template>
